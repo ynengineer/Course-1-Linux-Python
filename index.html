@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Learn network automation with Linux and SSH labs and quizzes."><title>Network Automation Engineer</title>
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#f5f7fb,#101827);--fg:light-dark(#192639,#e5edf8);--panel:light-dark(#fff,#1a2639);--line:light-dark(#cdd6e3,#41516a);--action:light-dark(#1958ad,#88b8ff);--on-action:light-dark(#fff,#102442);--sub:light-dark(#42516a,#bfcbdf)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px}header{padding:24px 0}h1{font-size:clamp(1.8rem,6vw,2.8rem);line-height:1.2;margin:.4em 0}h2{margin-top:2em}h3{margin-top:1.7em}a{color:var(--action)}nav{display:flex;flex-wrap:wrap;gap:16px}section,details.lesson-reading{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin:20px 0}summary{font-weight:600;cursor:pointer}article{min-width:0}table{border-collapse:collapse;display:block;max-width:100%;overflow:auto}td,th{border-bottom:1px solid var(--line);padding:10px;text-align:left;min-width:100px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--bg);padding:16px;border-radius:8px}code{overflow-wrap:anywhere}fieldset{border:0;border-top:1px solid var(--line);padding:18px 0;margin:12px 0;min-width:0}legend{font-weight:600;max-width:100%;padding:0}.form-check{display:flex;align-items:flex-start;gap:10px;margin:10px 0;min-height:36px}.form-check-input{flex-shrink:0;margin-top:7px}.form-label{display:block;margin:12px 0}.form-control,.form-select{display:block;max-width:100%;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--fg);font:inherit}textarea{resize:vertical}.viz-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.btn{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px 15px;margin:5px 0;cursor:pointer}.btn-primary{background:var(--action);color:var(--on-action);border-color:var(--action)}:focus-visible{outline:3px solid var(--action);outline-offset:3px}#summary,#save-status{color:var(--sub)}.kicker{font-weight:600;color:var(--action)}.roadmap{columns:2;column-gap:28px}.roadmap li{break-inside:avoid;margin-bottom:8px}.note{color:var(--sub)}@media(max-width:600px){main{padding:14px}section,details.lesson-reading{padding:14px}.roadmap{columns:1}}
+</style></head><body><main><header><div class="kicker">Your network automation course</div><h1>Network Automation Engineer</h1><p>From Cisco CLI to Python and Ansible</p><nav aria-label="Course navigation"><a href="#read">Read lessons</a><a href="#practice">Practice and quizzes</a><a href="#roadmap">Course roadmap</a><a href="#backup">Back up progress</a></nav></header>
+<section><h2 style="margin-top:0">Continue with Lesson 3</h2><p>SSH Fundamentals is ready. Lessons 1 and 2 are reconstructed, with completion unverified. Complete a lab and score at least 80% on its ten-question quiz to finish a lesson.</p><p class="note">This website saves progress in your browser. It does not synchronize with ChatGPT Pages or other devices. All terminal commands are simulated.</p></section>
+<h2 id="read">Lesson reading</h2><details class="lesson-reading" ><summary>Lesson 1 Linux Fundamentals</summary><article><p><a href="https://chatgpt.com/space/page_8ad155322ddc819197f1849f0d792e80">Course dashboard</a></p>
+<h1>Lesson status</h1>
+<p>Reconstructed lesson ready. Prior delivery is acknowledged; lab completion and quiz passage remain unverified.</p>
+<h1>Learning objectives</h1>
+<ul>
+<li><p>Navigate directories and read files</p>
+</li>
+<li><p>Use pipes and redirection</p>
+</li>
+<li><p>Create a safe automation workspace</p>
+</li>
+</ul>
+<h1>Lesson workspace</h1>
+<ul>
+<li><p><input disabled="" type="checkbox"> Study explanations and examples</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Complete hands-on lab and save evidence</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Take 10-question quiz and score at least 80%</p>
+</li>
+</ul>
+<p>Hints, worked solutions and the graded assessment will accompany the prepared lesson. Future lessons are outlines, not completed instructional content.</p>
+<h1>Linux as your automation workstation</h1>
+<p>A Linux shell is the command interpreter on your automation computer. You already know Cisco EXEC and configuration modes; Bash instead runs programs and manipulates files. Running a command does not enter a universal configuration mode. Paths identify files, and your current directory affects relative paths.</p>
+<h2>Filesystem and paths</h2>
+<p><code>/</code> is the filesystem root. <code>/home/student</code> is this fictional user&#39;s home directory, abbreviated <code>~</code>. Root the directory is different from root the privileged account. <code>/etc</code> commonly stores system configuration; <code>/var/log</code> holds logs. A leading slash makes a path absolute. <code>backups/router.cfg</code> is relative to your current directory. Linux names are case-sensitive.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Meaning</th>
+<th>Cisco connection</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pwd</code></td>
+<td>Print current directory</td>
+<td>Know your working context</td>
+</tr>
+<tr>
+<td><code>ls -la</code></td>
+<td>List details and hidden entries</td>
+<td>Inspect before acting</td>
+</tr>
+<tr>
+<td><code>cd ~/automation</code></td>
+<td>Change directory</td>
+<td>Select your workspace</td>
+</tr>
+<tr>
+<td><code>mkdir -p ~/automation/backups</code></td>
+<td>Create parents and directory</td>
+<td>Prepare a backup destination</td>
+</tr>
+<tr>
+<td><code>cat devices.txt</code></td>
+<td>Print a small file</td>
+<td>Read a saved inventory</td>
+</tr>
+<tr>
+<td><code>less router.cfg</code></td>
+<td>Page through a long file; q quits</td>
+<td>Similar purpose to paged show output</td>
+</tr>
+<tr>
+<td><code>cp devices.txt devices.bak</code></td>
+<td>Copy without removing the original</td>
+<td>Preserve evidence</td>
+</tr>
+<tr>
+<td><code>mv old.txt new.txt</code></td>
+<td>Rename or move</td>
+<td>Changes the path</td>
+</tr>
+<tr>
+<td><code>man ls</code></td>
+<td>Open command documentation</td>
+<td>Like contextual help</td>
+</tr>
+</tbody></table>
+<h2>Text and pipelines</h2>
+<p><code>grep</code> selects matching lines. A pipe sends one program&#39;s standard output to another program&#39;s input. Unlike IOS filtering, it can join arbitrary programs. <code>&gt;</code> overwrites or creates a file; <code>&gt;&gt;</code> appends. Inspect the destination before redirecting. <code>wc -l</code> counts newline characters.</p>
+<pre><code class="language-bash">mkdir -p ~/automation/backups
+cd ~/automation
+printf &#39;store001-rtr 192.0.2.11\nstore002-rtr 192.0.2.12\n&#39; &gt; devices.txt
+cat devices.txt
+grep store001 devices.txt
+cat devices.txt | wc -l
+cp devices.txt devices.bak
+</code></pre>
+<p><code>printf</code> writes the two fictional inventory lines. The quotes keep the format string together and <code>\n</code> creates newlines. Neither address is a real course device. Do not type the <code>$</code> prompt when copying commands.</p>
+<h2>Lab L01</h2>
+<p>In a disposable Ubuntu directory, create the automation workspace and a backups directory. Create the two-line inventory above, select only store001, copy the original to devices.bak and prove the inventory contains two lines. Inspect with pwd and ls. No sudo is required.</p>
+<p><strong>Hint:</strong> Create directories before changing into them. Use grep for selection and wc for counting.</p>
+<p><strong>Solution:</strong> Run the example block, then <code>pwd</code>, <code>ls -la</code> and <code>wc -l devices.txt</code>. Expected evidence: the path ends in automation, backups exists, devices.txt and devices.bak exist, and the line count is 2. Save your command transcript and explain why <code>&gt;</code> could damage an existing file.</p>
+<h2>Checkpoint</h2>
+<p>Explain absolute versus relative paths in your own words. Complete L01 in <a href="https://chatgpt.com/space/page_24d4d8f3d1448191b211d1cfa22b15d5">Interactive Labs</a>, then take the 10-question Lesson 1 assessment in <a href="https://chatgpt.com/space/page_25a6bf5ea1708191ac5b08accbdbdc77">Quizzes</a>. Completion requires both lab evidence and at least 80%; prior delivery earns no credit.</p>
+<h2>Free official references</h2>
+<p><a href="https://www.gnu.org/software/coreutils/manual/coreutils.html">GNU Coreutils manual</a> and <a href="https://www.gnu.org/software/bash/manual/html_node/Redirections.html">GNU Bash redirections</a>.</p>
+</article></details>
+<details class="lesson-reading" ><summary>Lesson 2 Linux Administration</summary><article><p><a href="https://chatgpt.com/space/page_8ad155322ddc819197f1849f0d792e80">Course dashboard</a></p>
+<h1>Lesson status</h1>
+<p>Reconstructed lesson ready. Prior delivery is acknowledged; lab completion and quiz passage remain unverified.</p>
+<h1>Learning objectives</h1>
+<ul>
+<li><p>Understand users permissions and sudo</p>
+</li>
+<li><p>Inspect services logs processes and networking</p>
+</li>
+<li><p>Diagnose without disrupting access</p>
+</li>
+</ul>
+<h1>Lesson workspace</h1>
+<ul>
+<li><p><input disabled="" type="checkbox"> Study explanations and examples</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Complete hands-on lab and save evidence</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Take 10-question quiz and score at least 80%</p>
+</li>
+</ul>
+<p>Hints, worked solutions and the graded assessment will accompany the prepared lesson. Future lessons are outlines, not completed instructional content.</p>
+<h1>Administer the automation host safely</h1>
+<p>Your automation host has users, permissions, running processes and services. Think of this as maintaining the management plane that will reach your Cisco devices. Start by observing. A service restart can interrupt your own session or every automation job.</p>
+<h2>Users and permissions</h2>
+<p><code>whoami</code> prints your username; <code>id</code> lists identity and groups. <code>sudo</code> runs an authorized command as another user, usually root. It is not needed for everyday project files. Use a dedicated automation account and scope privileges.</p>
+<p>The three permission groups are owner, group and others. Read = 4, write = 2 and execute = 1. Thus 600 is owner read/write only; 700 also gives owner execute. On a directory, execute permits traversal, read lists names and write permits directory-entry changes when traversal is available.</p>
+<pre><code class="language-bash">whoami
+id
+mkdir -p ~/automation
+cd ~/automation
+touch lab-inventory.txt
+chmod 600 lab-inventory.txt
+ls -l lab-inventory.txt
+</code></pre>
+<p><code>touch</code> creates an empty file or updates timestamps. <code>chmod 600</code> changes its mode; it does not encrypt the file. Avoid using 777 as a permission workaround. File ownership and ACLs also affect access.</p>
+<h2>Services processes and logs</h2>
+<p>On Ubuntu with systemd, <code>systemctl status ssh --no-pager</code> inspects the SSH service. Some minimal containers do not run systemd; an unavailable service manager is not proof SSH is broken.</p>
+<pre><code class="language-bash">systemctl status ssh --no-pager
+journalctl -u ssh -n 20 --no-pager
+ps aux
+df -h
+free -h
+ip address
+ip route
+ss -lnt
+</code></pre>
+<p><code>journalctl -u ssh</code> filters logs to the SSH unit and <code>-n 20</code> limits the result. Log visibility depends on permissions. <code>ps</code> shows processes, <code>df</code> filesystem capacity, <code>free</code> memory, <code>ip</code> interface and routing state, and <code>ss -lnt</code> listening numeric TCP sockets. These resemble show processes, show ip interface brief and show ip route in purpose, with different output.</p>
+<h2>Package administration</h2>
+<p><code>sudo apt update</code> refreshes package metadata; it does not install all upgrades. <code>sudo apt install openssh-client</code> installs the SSH client on a disposable Ubuntu lab host. The client initiates sessions; openssh-server is only needed to accept inbound sessions. Plan actual patching and restarts separately. Read-only inspection comes before changes.</p>
+<h2>Lab L02</h2>
+<p>Create lab-inventory.txt and restrict it to the owner. Inspect identity, service state, recent SSH logs, disk capacity, interface addresses, routes and listening TCP sockets. A simulated service report is provided in Interactive Labs.</p>
+<p><strong>Hint:</strong> Permission digits are sums, not a decimal ranking. Use status and journal output before considering restart.</p>
+<p><strong>Solution:</strong> Use the command blocks above. Expected file mode: <code>-rw-------</code>. For the simulated case, SSH is active and listening on TCP 22; a failed login is an authentication issue. An active service alone does not prove a remote client can reach it. Record the evidence and one next diagnostic step. Do not restart SSH for this lab.</p>
+<h2>Checkpoint and references</h2>
+<p>Complete L02 in <a href="https://chatgpt.com/space/page_24d4d8f3d1448191b211d1cfa22b15d5">Interactive Labs</a>, then the Lesson 2 quiz in <a href="https://chatgpt.com/space/page_25a6bf5ea1708191ac5b08accbdbdc77">Quizzes</a>. Completion is unverified until both requirements are met.</p>
+<p><a href="https://ubuntu.com/server/docs/how-to/security/openssh-server/">Ubuntu OpenSSH documentation</a>, <a href="https://www.freedesktop.org/software/systemd/man/latest/systemctl.html">systemctl manual</a>, <a href="https://www.freedesktop.org/software/systemd/man/latest/journalctl.html">journalctl manual</a>, <a href="https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html">GNU chmod</a>.</p>
+</article></details>
+<details class="lesson-reading" open><summary>Lesson 3 SSH Fundamentals</summary><article><p><a href="https://chatgpt.com/space/page_8ad155322ddc819197f1849f0d792e80">Course dashboard</a></p>
+<h1>Lesson status</h1>
+<p>Next lesson ready. Lab completion and quiz passage remain unverified.</p>
+<h1>Learning objectives</h1>
+<ul>
+<li><p>Verify host identity and use keys</p>
+</li>
+<li><p>Troubleshoot SSH in layers</p>
+</li>
+<li><p>Understand jump hosts and libssh</p>
+</li>
+</ul>
+<h1>Lesson workspace</h1>
+<ul>
+<li><p><input disabled="" type="checkbox"> Study explanations and examples</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Complete hands-on lab and save evidence</p>
+</li>
+<li><p><input disabled="" type="checkbox"> Take 10-question quiz and score at least 80%</p>
+</li>
+</ul>
+<p>Hints, worked solutions and the graded assessment will accompany the prepared lesson. Future lessons are outlines, not completed instructional content.</p>
+<h1>Begin with the SSH connection you already know</h1>
+<p><strong>Next lesson • approximately 45 to 60 minutes • no completion recorded.</strong> Your SSH session to a C1111, C1101 or 2960X already automates transport and encryption. Network automation adds software that opens that session, sends commands, checks results and handles failures. Before writing that software, separate network reachability, server identity, user authentication and command authorization.</p>
+<h2>Client server and trust</h2>
+<p>The client initiates a connection; the server accepts it, normally on TCP 22. Your Ubuntu host is the client when connecting to a Cisco device. Running Ansible does not require an inbound SSH server on the controller merely to manage network devices.</p>
+<p>A <strong>host key</strong> identifies the server. A <strong>user key</strong> authenticates you. They solve different problems. Your client records trusted host keys in known_hosts. A changed-host-key warning can indicate a legitimate rebuild or an attack. Stop and verify through a trusted separate channel before updating the record. ssh-keyscan collects a key but does not establish its trust.</p>
+<h2>First connection</h2>
+<p>All examples use documentation addresses and fictional accounts. These devices are simulated; do not expect the addresses to answer on the Internet.</p>
+<pre><code class="language-bash">ssh netauto@192.0.2.11
+ssh -p 2222 netauto@192.0.2.11
+ssh -vvv netauto@192.0.2.11
+</code></pre>
+<p><code>user@host</code> selects the remote account and target. <code>-p</code> selects a nondefault port; it does not change the server&#39;s configuration. <code>-vvv</code> increases debugging. Redact usernames, addresses and sensitive data before sharing logs. On the Cisco side, VTY access lists, AAA, allowed transports, routing and algorithm support all affect the session.</p>
+<h2>Keys and permissions</h2>
+<p>On your disposable Linux controller, create a passphrase-protected user key:</p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -f ~/.ssh/netauto_lab -C netauto-lab
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/netauto_lab
+ssh -i ~/.ssh/netauto_lab netauto@192.0.2.11
+</code></pre>
+<p>Use a unique filename; do not overwrite an existing key. The private file stays on the client; <code>netauto_lab.pub</code> is the public key. Provision the public key through an approved method. Linux servers commonly use authorized_keys; IOS and IOS XE public-key provisioning differs by release and AAA configuration. Ed25519 support on older Cisco images may be absent; verify supported modern algorithms before selecting an approved alternative. Do not globally enable obsolete algorithms to bypass an error.</p>
+<p><code>ssh-agent</code> can hold an unlocked key for a session. Agent forwarding exposes additional risk; it is not required for ProxyJump and is not part of this lab.</p>
+<h2>Jump hosts</h2>
+<p>A jump host provides a controlled path into a management network. Even with one target, it can centralize access restrictions and logging and avoid exposing the target directly. If the controller already has approved direct connectivity, a jump host may add no useful path.</p>
+<pre><code class="language-bash">ssh -J student@198.51.100.10 netauto@192.0.2.11
+</code></pre>
+<p>This makes an SSH connection to the jump host and forwards a TCP connection to the final target. Both host identities and both authentication steps matter. With a controller inside the management network, direct connectivity may be simpler.</p>
+<p>A fictional OpenSSH client configuration:</p>
+<pre><code class="language-sshconfig">Host lab-router
+    HostName 192.0.2.11
+    User netauto
+    IdentityFile ~/.ssh/netauto_lab
+    IdentitiesOnly yes
+    StrictHostKeyChecking yes
+</code></pre>
+<p>Then <code>ssh lab-router</code> uses the alias. Strict checking requires a previously verified known_hosts entry. The filename <code>~/.ssh/config</code> is OpenSSH configuration; it is separate from Ansible inventory.</p>
+<h2>OpenSSH libssh and Paramiko</h2>
+<p>OpenSSH is the command-line implementation used by <code>ssh</code>. libssh is a library; Ansible uses its Python binding ansible-pylibssh. Paramiko is a different Python SSH implementation. This course prefers libssh for network_cli and uses <code>ansible_libssh_proxy_command</code> for a jump path. These variables are taught in Lessons 8 and 9, not installed in this lesson.</p>
+<pre><code class="language-yaml">ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: cisco.ios.ios
+ansible_network_cli_ssh_type: libssh
+# Optional jump path; verify both hosts before use
+ansible_libssh_proxy_command: &quot;ssh -W %h:%p student@198.51.100.10&quot;
+</code></pre>
+<p><code>%h</code> and <code>%p</code> become the destination host and port. OpenSSH ProxyJump settings and libssh proxy settings are not interchangeable by assumption. Installed Ansible and collection versions determine the accepted options; inspect ansible-doc in the actual environment.</p>
+<h2>Troubleshoot in layers</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Investigate first</th>
+<th>Safe next step</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Timeout</td>
+<td>Route VPN firewall VTY ACL and target availability</td>
+<td>Verify path and expected port</td>
+</tr>
+<tr>
+<td>Connection refused</td>
+<td>Reachable endpoint rejecting the port</td>
+<td>Confirm server listener and port</td>
+</tr>
+<tr>
+<td>Host key changed</td>
+<td>Server identity</td>
+<td>Verify fingerprint independently</td>
+</tr>
+<tr>
+<td>Permission denied</td>
+<td>Username key AAA or password policy</td>
+<td>Review authentication logs and selected identity</td>
+</tr>
+<tr>
+<td>No matching algorithm</td>
+<td>Client server compatibility</td>
+<td>Check supported approved algorithms</td>
+</tr>
+<tr>
+<td>Login succeeds but command fails</td>
+<td>Authorization and privilege</td>
+<td>Review permitted command set</td>
+</tr>
+</tbody></table>
+<h2>Lab L03</h2>
+<p>Use the SSH scenario in Interactive Labs. First attempt a connection, verify the presented simulated host fingerprint, connect again, run <code>show version</code>, then <code>exit</code>. Explain why verifying a host key does not authorize a user. Diagnose the authentication-error scenario without disabling host-key checks.</p>
+<p><strong>Hint:</strong> The simulator provides a fictional trusted console fingerprint through its verify command. It performs no real cryptography or network connection.</p>
+<p><strong>Solution:</strong> <code>ssh netauto@192.0.2.11</code>, <code>verify-host</code>, <code>ssh netauto@192.0.2.11</code>, <code>show version</code>, <code>exit</code>. Expected results: the initial connection stops for verification, the trusted fingerprint matches, then a fictional C1111 IOS XE session succeeds. For Permission denied, inspect the account, selected identity and AAA logs.</p>
+<p>Complete the 10-question quiz in <a href="https://chatgpt.com/space/page_25a6bf5ea1708191ac5b08accbdbdc77">Quizzes</a>. At least 8 correct plus lab evidence completes this lesson. Lessons 1 and 2 remain unverified regardless of your Lesson 3 result.</p>
+<h2>Free official references</h2>
+<p><a href="https://man.openbsd.org/ssh">OpenSSH ssh manual</a>, <a href="https://man.openbsd.org/ssh_config">OpenSSH client configuration</a>, <a href="https://ubuntu.com/server/docs/how-to/security/openssh-server/">Ubuntu OpenSSH</a>, <a href="https://docs.ansible.com/projects/ansible/latest/collections/ansible/netcommon/network_cli_connection.html">Ansible network_cli</a>, <a href="https://docs.ansible.com/projects/ansible/latest/collections/ansible/netcommon/libssh_connection.html">Ansible libssh</a>.</p>
+<h2>Resume this lesson</h2>
+<pre><code class="language-codex-prompt">Read this lesson and the course Progress Tracker. Teach only the next unfinished part of Lesson 3, starting with one question about SSH host identity versus user authentication. Do not mark any lesson or lab passed without evidence. Preserve prior quiz attempts and use the 80 percent threshold.
+</code></pre>
+</article></details>
+<h2 id="practice">Interactive practice and quizzes</h2><section id="nae-console" aria-label="Course practice">
+<label class="form-label">Lesson <select class="form-select" id="lesson"><option value="0">1 Linux Fundamentals</option><option value="1">2 Linux Administration</option><option value="2" selected>3 SSH Fundamentals</option></select></label>
+<p id="save-status" role="status"></p>
+<div id="summary" aria-live="polite"></div>
+<h3>Lab terminal simulation</h3>
+<p id="goal"></p>
+<pre id="terminal" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+<form id="command-form"><label class="form-label" for="command">Command</label><input class="form-control" id="command" autocomplete="off" spellcheck="false"><div class="viz-row"><button class="btn btn-primary" type="submit">Run command</button><button class="btn" id="hint" type="button">Hint</button><button class="btn" id="solution" type="button">Solution</button><button class="btn" id="lab-check" type="button">Check lab</button></div></form>
+<p id="lab-result" aria-live="polite"></p>
+<h3>Configuration coding exercise</h3>
+<label class="form-label" for="code">OpenSSH client configuration for lab-router</label>
+<textarea class="form-control" id="code" rows="7" spellcheck="false" placeholder="Host lab-router&#10;    HostName ..."></textarea>
+<button class="btn" type="button" id="code-check">Check configuration</button><p id="code-result" aria-live="polite"></p>
+<h3>Knowledge test</h3><p>10 questions · pass at 8 correct · unlimited retries</p>
+<form id="quiz"><div id="questions"></div><button class="btn btn-primary" type="submit">Grade quiz</button><button class="btn" type="button" id="retry">Clear answers for retry</button></form>
+<p id="quiz-result" aria-live="polite"></p><div id="review"></div>
+<h3>Saved attempts</h3><div id="attempts"></div>
+<label class="form-label" for="notes">Resume notes and lab explanation</label><textarea id="notes" class="form-control" rows="3" maxlength="1200"></textarea><button class="btn" type="button" id="save-notes">Save notes</button>
+<button class="btn" type="button" id="record">Show progress record</button><pre id="export" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+</section>
+<section id="backup"><h2 style="margin-top:0">Back up your progress</h2><p>Download your progress before changing devices or clearing browser data. Importing merges quiz attempts and retains previously completed labs. Imported notes and virtual files replace the corresponding current fields.</p><button type="button" class="btn" id="download-progress">Download progress JSON</button><label class="form-label" for="import-progress">Import a saved progress record</label><input class="form-control" id="import-progress" type="file" accept="application/json,.json"><p id="import-result" role="status"></p></section>
+<section id="roadmap"><h2 style="margin-top:0">Course roadmap</h2><ol class="roadmap"><li>Linux Fundamentals — prepared</li><li>Linux Administration — prepared</li><li>SSH Fundamentals — prepared</li><li>Python Fundamentals — outline</li><li>Python Programming — outline</li><li>Python for Networking — outline</li><li>YAML and JSON — outline</li><li>Ansible Installation — outline</li><li>Ansible Inventory — outline</li><li>Ansible Playbooks — outline</li><li>Advanced Ansible — outline</li><li>Network Configuration Backups — outline</li><li>Network Configuration Changes — outline</li><li>NETCONF, RESTCONF and YANG — outline</li></ol><p>Lessons 4–14 and their assessments will be prepared as you advance. The <a href="https://chatgpt.com/space/page_8ad155322ddc819197f1849f0d792e80">original Pages dashboard</a> contains the linked course structure and capstone.</p></section>
+<footer><p class="note">Fictional addresses and accounts only. Simulations do not execute Linux, Cisco IOS or Ansible commands on any device.</p></footer>
+<script>
+(() => {
+const root=document.getElementById('nae-console'), el=id=>root.querySelector('#'+id);
+const BANK=[[["Which command prints your current directory?",["pwd","ls","whoami"],0,"pwd prints the working directory."],["Which path is absolute?",["backups/r1.cfg","/home/student/automation","./devices.txt"],1,"A leading slash starts at filesystem root."],["What does a pipe do?",["Appends to a file","Changes permissions","Sends stdout to another command"],2,"The next command receives the previous output."],["What is the risk of > devices.txt?",["It overwrites existing content","It encrypts the file","It creates a directory"],0,"Use >> only when appending is intended."],["Which command includes hidden entries?",["ls","ls -la","pwd"],1,"The -a option includes dot entries."],["What does cd .. do?",["Deletes the directory","Returns to root","Moves to the parent directory"],2,"Two dots name the parent."],["Select lines containing store001.",["grep store001 devices.txt","cp store001 devices.txt","cd store001"],0,"grep filters matching text."],["Which command preserves an original by copying it?",["mv","cp","rm"],1,"cp leaves the source in place."],["Are Devices.txt and devices.txt generally the same Linux name?",["Always","Only with sudo","No"],2,"Linux filesystems commonly distinguish case."],["What does ~ mean for this shell user?",["The user's home directory","Always /root","Filesystem root"],0,"Home depends on the current user."]],[["What does sudo normally do?",["Enters Cisco enable mode","Runs an authorized command as another user","Encrypts the command"],1,"sudo commonly runs a command as root."],["What does chmod 600 give the owner?",["Execute only","Read only","Read and write"],2,"6 is 4 plus 2; group and others get zero."],["What does directory execute permission allow?",["Traversal","Encryption","Automatic backup"],0,"Directory execute is search/traversal permission."],["Inspect SSH service without changing it.",["systemctl restart ssh","systemctl status ssh","systemctl stop ssh"],1,"status observes; restart and stop change service state."],["Inspect recent logs for the SSH unit.",["ip route","chmod ssh","journalctl -u ssh -n 20"],2,"-u selects the unit and -n limits entries."],["What does apt update do?",["Refreshes package metadata","Upgrades every package","Reboots Linux"],0,"Installing updates is a separate operation."],["Which command shows routing state?",["whoami","ip route","df -h"],1,"ip route displays route information."],["Which command lists listening numeric TCP sockets?",["ss -lnt","ls -la","free -h"],0,"l=listening, n=numeric, t=TCP."],["A container lacks systemctl. What can you conclude?",["SSH must be down","The router is down","It may not run systemd"],2,"Service-manager absence is not a connectivity test."],["Best first action for a remote SSH problem?",["Restart everything","Collect path service and log evidence","Disable all permissions"],1,"Observe before disruptive changes."]],[["Which key identifies the server?",["User private key","Host key","User public key"],1,"Host identity and user authentication are separate."],["Where should your private user key remain?",["On every router","In chat","On the protected client"],2,"Provision the public key through an approved method."],["A host key unexpectedly changes. First action?",["Verify independently","Disable checking","Delete all known_hosts"],0,"Establish why identity changed before updating trust."],["Select a nondefault SSH port.",["ssh -i 2222 host","ssh -p 2222 host","ssh -J 2222 host"],1,"-p selects the remote port."],["Connection timeout most directly suggests investigating...",["Only the password","Python indentation","Network path ACL or server reachability"],2,"A timeout occurs before successful authentication."],["Permission denied most directly suggests...",["User authentication or policy","Successful login","A missing VLAN in every case"],0,"Review account key selection and AAA evidence."],["Why use a jump host for even one device?",["To remove encryption","To provide a controlled management path","To avoid authenticating"],1,"A controlled path can be useful independent of target count."],["Does ssh-keyscan alone verify a server identity?",["Yes always","Only for Cisco","No"],2,"Collected keys need independent trust verification."],["Preferred course SSH backend for Ansible network_cli?",["libssh via ansible-pylibssh","Deprecated Paramiko preference","Telnet"],0,"Use the supported libssh backend and inspect installed versions."],["Preferred libssh variable for a jump proxy?",["ansible_paramiko_proxy_command","ansible_libssh_proxy_command","ansible_python_interpreter"],1,"Choose the variable for the active connection library."]]];
+const blank=()=>({cwd:'/home/student',dirs:['/home/student'],files:{},perms:{},seen:[],verified:false,connected:false});
+const initial=()=>({version:1,lessons:[0,1,2].map(()=>({lab:false,attempts:[],notes:'',code:'',answers:[],sim:blank()}))});
+let state=initial(),current=2,dirty=false;
+const normalize=x=>{const d=initial();if(x&&x.version===1&&Array.isArray(x.lessons)){for(let i=0;i<3;i++){const v=x.lessons[i];if(v&&typeof v==='object')d.lessons[i]={...d.lessons[i],...v,attempts:Array.isArray(v.attempts)?v.attempts:[],sim:{...blank(),...(v.sim||{})}}}}return d};
+
+const storageKey='network-automation-course-v1';
+let storageOK=true;
+try{const raw=localStorage.getItem(storageKey);if(raw)state=normalize(JSON.parse(raw));}catch(e){storageOK=false;}
+const active=()=>state.lessons[current];
+const status=()=>el('save-status').textContent=storageOK?'Progress saves in this browser on this device. Export a backup to keep a separate copy.':'Browser storage unavailable. Export progress before closing this page.';
+const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state));storageOK=true;status()}catch(e){storageOK=false;status()}};
+const goals=[
+'Create ~/automation/backups, create the two-line devices.txt inventory, filter store001, copy to devices.bak and count lines. Type help for supported commands.',
+'Create ~/automation/lab-inventory.txt, set mode 600, inspect it and collect identity, SSH status, logs, routes and listening sockets. Type help.',
+'Attempt SSH, verify the fictional console fingerprint, reconnect, run show version and exit. Type help. Then explain host identity versus user authentication in your notes.'
+];
+const solutions=[
+"mkdir -p ~/automation/backups\ncd ~/automation\nprintf 'store001-rtr 192.0.2.11\\nstore002-rtr 192.0.2.12\\n' > devices.txt\ngrep store001 devices.txt\ncp devices.txt devices.bak\nwc -l devices.txt",
+'mkdir -p ~/automation\ncd ~/automation\ntouch lab-inventory.txt\nchmod 600 lab-inventory.txt\nls -l lab-inventory.txt\nwhoami\nid\nsystemctl status ssh\njournalctl -u ssh -n 20\nip route\nss -lnt',
+'ssh netauto@192.0.2.11\nverify-host\nssh netauto@192.0.2.11\nshow version\nexit'];
+const hints=['mkdir -p creates parent directories. The inventory needs two newline-terminated records.','6 = read plus write. Start with status and logs, not restart.','The simulated trusted console fingerprint must match before connecting.'];
+let transcript=[];
+function path(s){if(s==='~')s='/home/student';else if(s.startsWith('~/'))s='/home/student/'+s.slice(2);else if(!s.startsWith('/'))s=active().sim.cwd+'/'+s;const parts=[];s.split('/').forEach(p=>{if(p==='..')parts.pop();else if(p&&p!=='.')parts.push(p)});return '/'+parts.join('/')}
+function write(s){transcript.push(s);transcript=transcript.slice(-36);el('terminal').textContent=transcript.join('\n')}
+function run(cmd){const s=active().sim,parts=cmd.trim().split(/\s+/),op=parts[0],p=path(parts.at(-1)||'.');if(!cmd.trim())return '';const seen=tag=>{if(!s.seen.includes(tag))s.seen.push(tag)};
+if(cmd==='help')return 'Restricted simulator; no actual shell or network. Supported: pwd, ls [-la|-l] [path], cd path, mkdir -p path, printf \'text\\n\' > file, cat file, grep pattern file, cp source destination, wc -l file, touch file, chmod 600 file, whoami, id, systemctl status ssh, journalctl -u ssh -n 20, ip address, ip route, ss -lnt, df -h, free -h, ssh netauto@192.0.2.11, verify-host, show version, exit, auth-error. Pipes and arbitrary programs are not implemented.';
+if(op==='pwd')return s.cwd;
+if(op==='mkdir'){let x='';p.split('/').filter(Boolean).forEach(t=>{x+='/'+t;if(!s.dirs.includes(x))s.dirs.push(x)});return 'Directory ready: '+p}
+if(op==='cd'){if(!s.dirs.includes(p))return 'No such directory';s.cwd=p;return s.cwd}
+if(op==='printf'){const m=cmd.match(/^printf\s+'([^']*)'\s*>\s*(\S+)$/);if(!m)return 'Supported format: printf \'text\\n\' > file';const target=path(m[2]);if(!s.dirs.includes(target.slice(0,target.lastIndexOf('/'))))return 'Parent directory missing';s.files[target]=m[1].replace(/\\n/g,'\n');return 'Wrote '+target}
+if(op==='touch'){s.files[p]??='';return 'File ready: '+p}
+if(op==='cat')return s.files[p]??'No such file';
+if(op==='cp'){const source=path(parts[1]||'');if(!(source in s.files))return 'Source missing';s.files[p]=s.files[source];return 'Copied'}
+if(op==='grep'){if(!(p in s.files))return 'File missing';seen('grep');return s.files[p].split('\n').filter(x=>x.includes(parts[1])).join('\n')||'(no matches)'}
+if(op==='wc'){if(!(p in s.files))return 'File missing';seen('wc');return (s.files[p].match(/\n/g)||[]).length+' '+parts.at(-1)}
+if(op==='chmod'){if(!(p in s.files))return 'File missing';if(parts[1]!=='600')return 'This lab accepts mode 600';s.perms[p]='600';return 'Mode set: 600'}
+if(op==='ls'){seen('ls');return Object.keys(s.files).filter(f=>f.startsWith(s.cwd+'/')).map(f=>(s.perms[f]==='600'?'-rw-------':'-rw-r--r--')+' student student '+f).concat(s.dirs.filter(d=>d.startsWith(s.cwd+'/')).map(d=>'drwxr-xr-x '+d)).join('\n')||'(empty)'}
+const reports={'whoami':'student','id':'uid=1000(student) gid=1000(student)','systemctl status ssh':'ssh.service: active (running)','systemctl status ssh --no-pager':'ssh.service: active (running)','journalctl -u ssh -n 20':'sshd: Failed publickey for netauto from 192.0.2.50','journalctl -u ssh -n 20 --no-pager':'sshd: Failed publickey for netauto from 192.0.2.50','ip route':'default via 192.0.2.1 dev eth0','ip address':'eth0: 192.0.2.50/24','ss -lnt':'LISTEN 0 128 0.0.0.0:22','df -h':'/dev/lab 20G 5G 15G 25% /','free -h':'Mem: 4Gi total, 2Gi available'};
+if(reports[cmd]){seen(cmd.replace(' --no-pager',''));return reports[cmd]}
+if(cmd==='verify-host'){s.verified=true;seen('verified');return 'Fictional trusted console fingerprint SHA256:SIMULATED-LAB-ONLY matches the presented host key. Trust recorded in this simulation.'}
+if(cmd==='ssh netauto@192.0.2.11'){seen('ssh-attempt');if(!s.verified)return 'Host identity unverified: SHA256:SIMULATED-LAB-ONLY. Stop and verify via trusted console (verify-host).';s.connected=true;seen('connected');return 'Authenticated as fictional netauto. store001-rtr#'}
+if(cmd==='show version'){if(!s.connected)return 'Connect to simulated router first';seen('show');return 'Cisco IOS XE Software — simulated C1111 lab output'}
+if(cmd==='exit'){s.connected=false;seen('exit');return 'Connection closed'}
+if(cmd==='auth-error')return 'Permission denied (publickey). Inspect the selected identity, user and AAA logs. Host-key checks remain enabled.';
+return 'Unsupported simulator command. Type help. No operation executed.';
+}
+function summary(){const rows=state.lessons.map((l,i)=>{const best=Math.max(0,...l.attempts.map(a=>a.score));return 'Lesson '+(i+1)+': '+(l.lab&&best>=80?'Complete':l.lab?'Lab done; quiz pending':best>=80?'Quiz passed; lab pending':'Unverified')+' · best '+(l.attempts.length?best+'%':'not attempted')});el('summary').textContent=rows.join(' | ')+' | Lessons 4–14: outlines, unattempted.'}
+function render(){el('lesson').value=current;el('goal').textContent=goals[current];el('code').value=active().code;el('notes').value=active().notes;el('lab-result').textContent=active().lab?'Lab passed in simulation.':'';el('code-result').textContent='';el('quiz-result').textContent='';el('review').replaceChildren();el('questions').replaceChildren();transcript=[];write('Simulation ready. Saved virtual filesystem retained; type help.');BANK[current].forEach((q,i)=>{const f=document.createElement('fieldset'),legend=document.createElement('legend');legend.textContent=(i+1)+'. '+q[0];f.append(legend);q[1].forEach((text,j)=>{const label=document.createElement('label');label.className='form-check';const input=document.createElement('input');input.className='form-check-input';input.type='radio';input.name='q'+i;input.value=j;input.checked=active().answers[i]===j;input.onchange=()=>{active().answers[i]=j;persist()};label.append(input,document.createTextNode(' '+text));f.append(label)});el('questions').append(f)});attempts();summary();status()}
+function attempts(){el('attempts').textContent=active().attempts.map((a,i)=>'#'+(i+1)+' '+a.at+' '+a.score+'% '+(a.score>=80?'PASS':'RETRY')).join(' | ')||'No attempts recorded.'}
+el('lesson').onchange=e=>{current=Number(e.target.value);render()};
+el('command-form').onsubmit=e=>{e.preventDefault();const c=el('command').value.trim();write('$ '+c);write(run(c));el('command').value='';persist()};
+el('hint').onclick=()=>el('lab-result').textContent=hints[current];
+el('solution').onclick=()=>el('lab-result').textContent=solutions[current];
+el('lab-check').onclick=()=>{const s=active().sim,seen=x=>s.seen.includes(x);let pass=false;if(current===0){const f=s.files['/home/student/automation/devices.txt'];pass=s.dirs.includes('/home/student/automation/backups')&&f==='store001-rtr 192.0.2.11\nstore002-rtr 192.0.2.12\n'&&s.files['/home/student/automation/devices.bak']===f&&seen('grep')&&seen('wc')}if(current===1)pass=s.perms['/home/student/automation/lab-inventory.txt']==='600'&&['whoami','id','ls','systemctl status ssh','journalctl -u ssh -n 20','ip route','ss -lnt'].every(seen);if(current===2)pass=['ssh-attempt','verified','connected','show','exit'].every(seen);if(pass){active().lab=true;persist();summary()}el('lab-result').textContent=pass?'Lab passed in simulation. Add your explanation in resume notes.':'Not yet complete. Compare your work with the goal; use a hint if needed.'};
+el('code-check').onclick=()=>{active().code=el('code').value.slice(0,1600);const c=active().code;const required=[/^Host lab-router\s*$/m,/^\s+HostName 192\.0\.2\.11\s*$/m,/^\s+User netauto\s*$/m,/^\s+IdentityFile ~\/\.ssh\/netauto_lab\s*$/m,/^\s+StrictHostKeyChecking yes\s*$/m];el('code-result').textContent=required.every(re=>re.test(c))&&!/StrictHostKeyChecking\s+(no|off)/i.test(c)?'Required directives found. Static exercise only; real SSH configuration is not executed.':'Include Host lab-router, HostName 192.0.2.11, User netauto, IdentityFile ~/.ssh/netauto_lab and StrictHostKeyChecking yes with indented directives.';persist()};
+el('quiz').onsubmit=e=>{e.preventDefault();if(BANK[current].some((_,i)=>!Number.isInteger(active().answers[i]))){el('quiz-result').textContent='Answer all 10 questions before grading.';return}let correct=0;const review=[];BANK[current].forEach((q,i)=>{if(active().answers[i]===q[2])correct++;else review.push((i+1)+': '+q[3])});const score=correct*10;active().attempts.push({at:new Date().toISOString(),score,answers:active().answers.slice()});el('quiz-result').textContent=correct+'/10 · '+score+'% · '+(score>=80?'PASS':'RETRY — review missed concepts');el('review').textContent=review.join(' | ');persist();attempts();summary()};
+el('retry').onclick=()=>{active().answers=[];persist();render()};
+el('save-notes').onclick=()=>{active().notes=el('notes').value.slice(0,1200);persist()};
+el('record').onclick=()=>el('export').textContent=JSON.stringify(state,null,2);
+window.addEventListener('storage',event=>{if(event.key===storageKey&&event.newValue){try{state=normalize(JSON.parse(event.newValue));render()}catch(e){}}});
+el('download-progress').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='network-automation-progress.json';a.click();URL.revokeObjectURL(url)};
+el('import-progress').onchange=async event=>{const file=event.target.files[0];if(!file)return;try{const candidate=JSON.parse(await file.text());if(candidate.version!==1||!Array.isArray(candidate.lessons)||candidate.lessons.length!==3)throw Error('Invalid course record');const merged=normalize(candidate);for(let i=0;i<3;i++){const old=state.lessons[i];merged.lessons[i].lab=!!(old.lab||merged.lessons[i].lab);const attempts=[...old.attempts,...merged.lessons[i].attempts];merged.lessons[i].attempts=Array.from(new Map(attempts.map(a=>[JSON.stringify(a),a])).values());}state=merged;persist();render();el('import-result').textContent='Progress imported. Previous quiz attempts retained.'}catch(e){el('import-result').textContent='Could not import: choose a valid course progress JSON file.'}};
+render();
+})();
+</script></main></body></html>
