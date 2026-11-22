@@ -1,0 +1,40 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const path=require('path');
+const html=fs.readFileSync(path.join(__dirname,'learning-console.html'),'utf8');
+function start(saved){
+ const ids={},events={};
+ function element(tag='div'){return {tag,children:[],value:'',textContent:'',append(...xs){this.children.push(...xs)},replaceChildren(...xs){this.children=xs}}}
+ for(const id of [...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]))ids[id]=element();
+ ids['nae-console'].querySelector=s=>ids[s.slice(1)];
+ const document={getElementById:id=>ids[id],createElement:element,createTextNode:t=>({textContent:t})};
+ const window={openai:{widgetState:saved||{},setWidgetState(s){this.widgetState=structuredClone(s)}},addEventListener:(n,f)=>events[n]=f};
+ const context={document,window,TextEncoder,Date,console};
+ vm.runInNewContext(html.match(/<script>([\s\S]*)<\/script>/)[1],context);
+ const submit=e=>e.onsubmit({preventDefault(){}});
+ const command=c=>{ids.command.value=c;submit(ids['command-form'])};
+ const select=i=>ids.lesson.onchange({target:{value:i}});
+ const answer=(i,j)=>{const radio=ids.questions.children[i].children[j+1].children[0];radio.onchange()};
+ return {ids,window,events,submit,command,select,answer};
+}
+const t=start(),q=t.ids;
+q['lab-check'].onclick();assert(q['lab-result'].textContent.startsWith('Not yet'));
+for(const c of ['ssh netauto@192.0.2.11','verify-host','ssh netauto@192.0.2.11','show version','exit'])t.command(c);
+q['lab-check'].onclick();assert(q['lab-result'].textContent.startsWith('Lab passed'));
+t.submit(q.quiz);assert(q['quiz-result'].textContent.startsWith('Answer all'));
+const correct=[1,2,0,1,2,0,1,2,0,1];
+for(let i=0;i<10;i++)t.answer(i,i<7?correct[i]:(correct[i]+1)%3);
+t.submit(q.quiz);assert(q['quiz-result'].textContent.includes('70% · RETRY'));
+t.answer(7,correct[7]);t.submit(q.quiz);assert(q['quiz-result'].textContent.includes('80% · PASS'));
+q.code.value='Host lab-router\n    HostName 192.0.2.11\n    User netauto\n    IdentityFile ~/.ssh/netauto_lab\n    StrictHostKeyChecking yes';q['code-check'].onclick();assert(q['code-result'].textContent.startsWith('Required directives found'));
+t.select(0);for(const c of ['mkdir -p ~/automation/backups','cd ~/automation',"printf 'store001-rtr 192.0.2.11\\nstore002-rtr 192.0.2.12\\n' > devices.txt",'grep store001 devices.txt','cp devices.txt devices.bak','wc -l devices.txt'])t.command(c);
+q['lab-check'].onclick();assert(q['lab-result'].textContent.startsWith('Lab passed'));
+t.select(1);for(const c of ['mkdir -p ~/automation','cd ~/automation','touch lab-inventory.txt','chmod 600 lab-inventory.txt','ls -l lab-inventory.txt','whoami','id','systemctl status ssh','journalctl -u ssh -n 20','ip route','ss -lnt'])t.command(c);
+q['lab-check'].onclick();assert(q['lab-result'].textContent.startsWith('Lab passed'));
+const saved=structuredClone(t.window.openai.widgetState);
+assert(saved.modelContent.course.lessons.every(l=>l.lab));
+assert.equal(saved.modelContent.course.lessons[2].attempts.length,2);
+const restored=start(saved);assert(restored.ids.summary.textContent.includes('Lesson 3: Complete'));
+const incoming=structuredClone(saved);incoming.modelContent.course.lessons[0].notes='Incoming synchronized note';
+restored.events['openai:set_globals']({detail:{globals:{widgetState:incoming}}});restored.select(0);assert.equal(restored.ids.notes.value,'Incoming synchronized note');
+assert.equal(start().window.openai.widgetState.modelContent,undefined,'Defaults must not be saved on load');
+console.log(JSON.stringify({passed:true,checks:['3 lab completions','incomplete quiz blocked','70 percent fails','80 percent passes','SSH config check','attempt history','state reload','incoming state synchronization','no default write'],stateBytes:JSON.stringify(saved).length}));
