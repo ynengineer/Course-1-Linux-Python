@@ -3,6 +3,23 @@
 
 Source code for the interactive course console created in ChatGPT Pages.
 
+## Open as a website
+
+The browser-ready version is `index.html`. It includes lesson reading for Lessons 1–3, all three simulations, quizzes, and browser-local progress with JSON export/import. It does not need ChatGPT's host APIs.
+
+To publish with GitHub Pages:
+
+1. Open repository **Settings → Pages**.
+2. Under **Build and deployment**, select **Deploy from a branch**.
+3. Select **main** and **/(root)**, then **Save**.
+4. Wait for the deployment and open the website URL shown on that settings page.
+
+GitHub Free requires a public repository for Pages; private repository Pages requires an eligible paid GitHub plan. This repository has not been made public. GitHub Pages websites are normally public even when their source repository is private.
+
+The website's quiz progress stays in your browser, not in GitHub or the Pages course. Use **Download progress JSON** before clearing browser data or moving devices. Import retains prior quiz attempts and completed labs while replacing imported notes and virtual files.
+
+The publishing setting must still be enabled in GitHub; committing index.html alone does not publish the site.
+
 ## Included
 
 - Three restricted terminal simulations: Linux Fundamentals, Linux Administration, and SSH Fundamentals.
@@ -17,6 +34,7 @@ Lessons 1 and 2 were previously delivered but have **not** been verified as comp
 
 | File | Purpose |
 | --- | --- |
+| index.html | Standalone website with lessons, browser-local progress, and export/import |
 | learning-console.html | HTML fragment containing the interactive console and question bank |
 | test-course-logic.cjs | Dependency-free Node.js tests for simulator, grading, and state behavior |
 | README.md | Usage and course links |
@@ -66,7 +84,7 @@ Page access depends on your ChatGPT account permissions. GitHub does not host or
 13. Network Configuration Changes — outline
 14. NETCONF, RESTCONF and YANG — outline
 
-Later lesson content and assessments are prepared one lesson at a time in Pages. The full instructional text and capstone remain in the course Pages; this repository currently contains the interactive console source.
+Later lesson content and assessments are prepared one lesson at a time in Pages. The full instructional text and capstone remain in the course Pages; the standalone website includes Lessons 1–3 and the interactive console.
 
 ## Lab scope
 
